@@ -16,12 +16,4 @@ class Refund < ApplicationRecord
   belongs_to :purchase
   belongs_to :payment
   enum state: { pending: 0, completed: 1 }
-
-  after_save :update_seller_balance
-
-  def update_seller_balance
-    if saved_change_to_state == [nil, 'pending']
-      purchase.seller.decrease_balance(payment.amount)
-    end
-  end
 end

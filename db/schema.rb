@@ -76,8 +76,10 @@ ActiveRecord::Schema.define(version: 20190115190120) do
   create_table "settlements", force: :cascade do |t|
     t.decimal "amount", precision: 10, scale: 2
     t.integer "state"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_settlements_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -13,7 +13,12 @@
 
 class User < ApplicationRecord
   has_many :purchases, foreign_key: :seller_id
+  
   enum payout_day: { sun: 0, mon: 1, tues: 2, wed: 3, thu: 4, fri: 5, sat: 6 }
+
+  #
+  # These two functions keeps updating user's balance depending upon the case.
+  #
 
   def increase_balance(amount = 0.0)
     balance = self.balance + amount
@@ -21,12 +26,7 @@ class User < ApplicationRecord
   end
 
   def decrease_balance(amount = 0.0)
-    # Checks if deductible is less than 0
-    if amount >= 0
-      balance = self.balance - amount
-    else
-      balance = self.balance + amount
-    end    
+    balance = self.balance - amount
     self.update(balance: balance)
   end
 end
